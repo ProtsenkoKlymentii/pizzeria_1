@@ -7,7 +7,6 @@ public class Pizza {
     private double price;
 
     public Pizza(String name, double price) {
-        // Защита от отрицательной цены (соответствует тесту testNegativePricePizza)
         if (price < 0) {
             throw new IllegalArgumentException("Pizza price cannot be negative");
         }
@@ -41,7 +40,6 @@ public class Pizza {
     }
 
     public double calculateDiscountPrice(double discountPercent) {
-        // Тут тоже можно добавить проверку, чтобы скидка была от 0 до 100
         if (discountPercent < 0 || discountPercent > 100) {
             throw new IllegalArgumentException("Discount must be between 0 and 100");
         }
