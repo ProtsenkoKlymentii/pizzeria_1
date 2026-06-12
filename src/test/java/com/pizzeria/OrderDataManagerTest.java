@@ -25,7 +25,6 @@ public class OrderDataManagerTest {
 
     private OrderDataManager dataManager;
 
-    // Создаем моки для потоков ввода-вывода с помощью аннотации Mockito
     @Mock
     private Writer mockWriter;
 
@@ -39,37 +38,27 @@ public class OrderDataManagerTest {
 
     @Test
     void testExportOrder_ShouldSortPizzasBeforeWriting() throws IOException {
-        // 1. Готовим моки для наших сущностей
         Order mockOrder = mock(Order.class);
         Customer mockCustomer = mock(Customer.class);
         List<Pizza> pizzas = new ArrayList<>();
         pizzas.add(new Pizza("Margherita", 5));
 
-        // 2. Обучаем моки возвращать нужные данные (Stubbing)
         when(mockOrder.getCustomer()).thenReturn(mockCustomer);
         when(mockCustomer.getName()).thenReturn("Klim");
         when(mockOrder.getPizzas()).thenReturn(pizzas);
 
-        // 3. Вызываем тестируемый метод экспорта
         dataManager.exportOrder(mockOrder, mockWriter);
 
-        // 4. ПРОВЕРКА INTERACTION (Самая суть Mockito):
-        // Убеждаемся, что метод сортировки БЫЛ вызван внутри exportOrder
         verify(mockOrder).sortPizzasByPrice();
         
-        // Убеждаемся, что во writer была произведена запись данных
         verify(mockWriter, atLeastOnce()).write(any(char[].class), anyInt(), anyInt());
     }
 
     @Test
     void testImportOrder_ShouldThrowIOException_WhenReaderFails() throws IOException {
-        // Симулируем «битый диск» или ошибку чтения:
-        // Когда BufferedReader внутри попытается прочитать данные из нашего mockReader,
-        // мок выбросит контролируемый IOException.
         when(mockReader.read(any(char[].class), anyInt(), anyInt()))
                 .thenThrow(new IOException("Simulated hardware disk error"));
 
-        // Проверяем покрытие исключительной ситуации (Пункт 5 лабы)
         assertThrows(IOException.class, () -> {
             dataManager.importOrder(mockReader);
         });
@@ -77,7 +66,6 @@ public class OrderDataManagerTest {
 
     @Test
     void testExportOrder_ShouldThrowIllegalArgumentException_WhenOrderIsNull() {
-        // Проверка валидации на null данные (невалидные входные данные)
         assertThrows(IllegalArgumentException.class, () -> {
             dataManager.exportOrder(null, mockWriter);
         });
