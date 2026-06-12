@@ -9,7 +9,7 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         OrderDataManager dataManager = new OrderDataManager();
         Order currentOrder = null;
-        String filePath = "order.csv"; // Имя файла для сохранения по умолчанию
+        String filePath = "order.csv";
 
         System.out.println("=== Welcome to Pizzeria Management System ===");
 
@@ -57,7 +57,6 @@ public class App {
                     if (currentOrder == null) {
                         System.out.println("No active order to view.");
                     } else {
-                        // Выполняем требование лабы: сортируем перед демонстрацией/выводом
                         currentOrder.sortPizzasByPrice();
                         currentOrder.printOrder();
                     }
@@ -101,9 +100,6 @@ public class App {
         scanner.close();
     }
 
-    /**
-     * Твой оригинальный цикл выбора пиццы, вынесенный в отдельный удобный метод
-     */
     private static void runPizzaSelectionLoop(Scanner scanner, Order order) {
         while (true) {
             System.out.println("\nChoose pizza:");
@@ -145,7 +141,7 @@ public class App {
             try {
                 next = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
-                next = 1; // по умолчанию продолжаем при ошибке ввода
+                next = 1;
             }
 
             if (next == 0) {
