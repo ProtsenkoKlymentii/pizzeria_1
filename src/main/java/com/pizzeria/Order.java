@@ -17,7 +17,6 @@ public class Order {
         this.customer = customer;
     }
 
-    // Возвращаем геттеры и сеттеры, которые ожидает OrderDataManager
     public Customer getCustomer() {
         return customer;
     }
