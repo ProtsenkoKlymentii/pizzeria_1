@@ -6,7 +6,7 @@ public class Customer {
     private String name;
 
     public Customer(String name) {
-        // Защита от null и пустых строк (соответствует тесту testEmptyCustomerName)
+
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Customer name cannot be null or empty");
         }
